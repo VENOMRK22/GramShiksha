@@ -1,0 +1,62 @@
+{
+    "app": {
+        "title": "AlgoSensei",
+        "tagline": "Offline Learning AI"
+    },
+    "nav": {
+        "home": "Home",
+        "my_class": "My Class",
+        "subjects_lessons": "Subjects & Lessons",
+        "learn": "Learn",
+        "sync": "Sync",
+        "settings": "Settings",
+        "homework": "Homework",
+        "pending_assignments": "Pending Assignments",
+        "leaderboard": "Leaderboard",
+        "class_rankings": "Class Rankings",
+        "village_rank": "Village Rank",
+        "community_standing": "Community Standing",
+        "recently_sync": "Recently Sync",
+        "sync_history": "Sync History",
+        "attendance": "Attendance",
+        "track_presence": "Track Presence",
+        "achievements": "Achievements",
+        "village": "Village"
+    },
+    "dashboard": {
+        "welcome": "Welcome back, {{name}}!",
+        "hello": "Hello, {{name}}",
+        "ready": "Ready to explore?",
+        "stars": "Stars",
+        "score": "Score",
+        "xp": "XP",
+        "system_energy": "System Energy",
+        "elite_status": "Elite Status",
+        "star_currency": "Star Currency",
+        "sync_btn": "Sync Data",
+        "logout_btn": "Log Out"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "reset_data": "Reset All Data",
+        "teacher_ip": "Teacher Hotspot IP",
+        "save": "Save"
+    },
+    "teacher": {
+        "portal": "Teacher Portal",
+        "dashboard": "Dashboard",
+        "create_content": "Create Content"
+    },
+    "homework": {
+        "pending_count": "Assignments Pending",
+        "checking": "Checking assignments...",
+        "all_caught_up": "All Caught Up!",
+        "no_homework_desc": "No homework assigned yet. Enjoy your free time!",
+        "done": "Done",
+        "pending": "Pending",
+        "score_percent": "{{score}}% Score",
+        "open": "Open Assignment",
+        "default_desc": "Assigned by your teacher. Complete to earn XP!"
+    }
+}

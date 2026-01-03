@@ -1,0 +1,62 @@
+{
+    "app": {
+        "title": "अल्गोसेंसेई",
+        "tagline": "ऑफलाइन लर्निंग एआय"
+    },
+    "nav": {
+        "home": "होम",
+        "my_class": "माझा वर्ग",
+        "subjects_lessons": "विषय आणि धडे",
+        "learn": "शिका",
+        "sync": "सिंक",
+        "settings": "सेटिंग्ज",
+        "homework": "गृहपाठ",
+        "pending_assignments": "प्रलंबित असाइनमेंट",
+        "leaderboard": "लीडरबोर्ड",
+        "class_rankings": "वर्ग रँकिंग",
+        "village_rank": "गाव रँक",
+        "community_standing": "समुदाय स्थिती",
+        "recently_sync": "नुकतेच सिंक",
+        "sync_history": "सिंक इतिहास",
+        "attendance": "उपस्थिती",
+        "track_presence": "उपस्थिती ट्रॅक करा",
+        "achievements": "उपलब्धी",
+        "village": "गाव"
+    },
+    "dashboard": {
+        "welcome": "परत स्वागत आहे, {{name}}!",
+        "hello": "नमस्कार, {{name}}",
+        "ready": "तुम्ही तयार आहात का?",
+        "stars": "तारे",
+        "score": "गुण",
+        "xp": "XP",
+        "system_energy": "सिस्टम ऊर्जा",
+        "elite_status": "एलिट स्टेटस",
+        "star_currency": "स्टार करन्सी",
+        "sync_btn": "डेटा सिंक करा",
+        "logout_btn": "बाहेर पडा"
+    },
+    "settings": {
+        "title": "सेटिंग्ज",
+        "language": "भाषा",
+        "reset_data": "सर्व डेटा रीसेट करा",
+        "teacher_ip": "शिक्षक हॉटस्पॉट आयपी",
+        "save": "जतन करा"
+    },
+    "teacher": {
+        "portal": "शिक्षक दालन",
+        "dashboard": "डॅशबोर्ड",
+        "create_content": "सामग्री तयार करा"
+    },
+    "homework": {
+        "pending_count": "असाइनमेंट प्रलंबित",
+        "checking": "असाइनमेंट तपासत आहे...",
+        "all_caught_up": "सर्व पूर्ण झाले!",
+        "no_homework_desc": "अद्याप कोणताही गृहपाठ नाही. आपल्या मोकळ्या वेळेचा आनंद घ्या!",
+        "done": "पूर्ण",
+        "pending": "प्रलंबित",
+        "score_percent": "{{score}}% गुण",
+        "open": "असाइनमेंट उघडा",
+        "default_desc": "आपल्या शिक्षकाने दिलेले. XP मिळवण्यासाठी पूर्ण करा!"
+    }
+}
