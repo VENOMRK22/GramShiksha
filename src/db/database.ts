@@ -29,6 +29,10 @@ if (import.meta.env.DEV) {
     import('rxdb/plugins/dev-mode').then(module => addRxPlugin(module.RxDBDevModePlugin));
 }
 
+const dbStorage = wrappedValidateAjvStorage({
+    storage: getRxStorageDexie()
+});
+
 let dbPromise: Promise<EduDatabase> | null = null;
 
 export const createDB = async (): Promise<EduDatabase> => {
@@ -39,9 +43,7 @@ export const createDB = async (): Promise<EduDatabase> => {
 
         const db = await createRxDatabase<EduDatabaseCollections>({
             name: 'edudb_v6',
-            storage: wrappedValidateAjvStorage({
-                storage: getRxStorageDexie()
-            }),
+            storage: dbStorage,
             ignoreDuplicate: true
         });
 

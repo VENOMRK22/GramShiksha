@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# GramShiksha - Offline-First Educational Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+GramShiksha is a Progressive Web Application (PWA) designed to bridge the digital divide by providing high-quality, gamified education in low-connectivity and remote environments.
 
-Currently, two official plugins are available:
+### 🚀 **[Launch Live Application](https://VENOMRK22.github.io/GramShiksha/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## The 3 Pillars of GramShiksha
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Offline-First Architecture 📶
+Built on a local-first philosophy, GramShiksha ensures that learning never stops, even without an internet connection.
+- **Local Database (RxDB)**: All student progress, lessons, and quiz results are stored locally on the device using IndexedDB.
+- **PWA Capabilities**: The app installs as a native-like application on any device and caches critical assets for instant, offline access.
+- **Resilient Reliability**: The application functions 100% offline. Server sync is an optional enhancement, not a requirement.
 
-## Expanding the ESLint configuration
+### 2. Gamified Learning Experience 🎮
+To keep students engaged and motivated, we integrate core game mechanics into the learning process.
+- **Level-Based Progression**: Students navigate a "World Map" of knowledge, unlocking new levels as they master subjects.
+- **Rewards System**: Learners earn stars, coins, and badges for completing content and acing quizzes.
+- **Leaderboards**: Friendly competition via village and class leaderboards fosters a sense of community and achievement.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 3. Peer-to-Peer (P2P) Offline Sync 🔄
+We solve the content distribution problem in remote areas with our innovative QR-based sync system.
+- **Device-to-Device Sharing**: Teachers or students can share their progress or distribute new content by generating and scanning QR codes.
+- **No Internet Required**: Data is compressed and encoded into QR streams, allowing "air-gapped" transfer of quizzes, lessons, and user profiles between devices directly.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech Stack
+- **Frontend**: React, TypeScript, Vite
+- **Styling**: Tailwind CSS, Shadcn UI, Framer Motion
+- **Database**: RxDB (Local-First)
+- **Deployment**: GitHub Pages
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Getting Started
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Prerequisites
+- Node.js (v18+)
+- npm or yarn
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/VENOMRK22/GramShiksha.git
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Build for production:
+   ```bash
+   npm run build
+   ```
+
+5. Deploy to GitHub Pages:
+   ```bash
+   npm run deploy
+   ```

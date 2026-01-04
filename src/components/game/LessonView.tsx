@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, FileText, Download } from 'lucide-react';
+import { FileText, Download } from 'lucide-react';
 import 'react-quill-new/dist/quill.snow.css';
 
 interface LessonViewProps {
@@ -24,7 +24,7 @@ const LANGUAGES = [
     { code: 'mr', label: 'Marathi' }
 ];
 
-export default function LessonView({ data, onComplete, onExit }: LessonViewProps) {
+export default function LessonView({ data, onComplete: _onComplete, onExit }: LessonViewProps) {
     const [viewMode, setViewMode] = useState<'list' | 'viewer'>('list');
     const [activeResource, setActiveResource] = useState<any>(null); // { type, content, name }
     const [activeLang, setActiveLang] = useState('en');

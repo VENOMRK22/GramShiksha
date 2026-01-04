@@ -248,7 +248,7 @@ export default function LevelPlayer() {
                         </button>
                     )}
 
-                    {moduleChildren.map((child, index) => (
+                    {moduleChildren.map((child) => (
                         <button
                             key={child.id}
                             onClick={() => navigate(`/play/${child.id}`)}

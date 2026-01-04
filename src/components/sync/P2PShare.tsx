@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useDatabase } from '../../context/DatabaseContext';
 import { generateSyncPayload, generateContentPayload } from '../../lib/sync';
 import { Copy, Check, User, FileText, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+
 
 export default function P2PShare() {
     const { currentUser } = useAuth();
