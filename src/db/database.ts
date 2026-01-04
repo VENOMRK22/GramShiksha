@@ -50,7 +50,7 @@ export const createDB = async (): Promise<EduDatabase> => {
         console.log('Initializing Database...');
 
         const db = await createRxDatabase<EduDatabaseCollections>({
-            name: 'edudb_v6',
+            name: 'gramshiksha_db_v1',
             storage: dbStorage,
             ignoreDuplicate: true
         });
