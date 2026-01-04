@@ -29,16 +29,24 @@ if (import.meta.env.DEV) {
     import('rxdb/plugins/dev-mode').then(module => addRxPlugin(module.RxDBDevModePlugin));
 }
 
-const dbStorage = wrappedValidateAjvStorage({
-    storage: getRxStorageDexie()
-});
+// Singleton Storage to prevent DB9 errors if module is re-evaluated
+const globalAny: any = window;
 
-let dbPromise: Promise<EduDatabase> | null = null;
+let dbStorage = globalAny._edu_db_storage;
+if (!dbStorage) {
+    dbStorage = wrappedValidateAjvStorage({
+        storage: getRxStorageDexie()
+    });
+    globalAny._edu_db_storage = dbStorage;
+}
 
 export const createDB = async (): Promise<EduDatabase> => {
-    if (dbPromise) return dbPromise;
+    // Check global singleton first
+    if (globalAny._edu_db_promise) {
+        return globalAny._edu_db_promise;
+    }
 
-    dbPromise = (async () => {
+    const initPromise = (async () => {
         console.log('Initializing Database...');
 
         const db = await createRxDatabase<EduDatabaseCollections>({
@@ -169,7 +177,8 @@ export const createDB = async (): Promise<EduDatabase> => {
         return db;
     })();
 
-    return dbPromise;
+    globalAny._edu_db_promise = initPromise;
+    return initPromise;
 };
 
 export const syncDatabase = async (db: EduDatabase, remoteUrl: string, filterClassId?: string) => {
