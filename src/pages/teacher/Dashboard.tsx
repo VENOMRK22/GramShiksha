@@ -19,6 +19,10 @@ export default function TeacherDashboard() {
     });
     const [classes, setClasses] = useState<any[]>([]);
 
+    // IP Address State
+    const [ipAddress, setIpAddress] = useState('');
+    const [savingIp, setSavingIp] = useState(false);
+
     // New Class Form State
     const [newClass, setNewClass] = useState({
         name: '',
@@ -44,6 +48,10 @@ export default function TeacherDashboard() {
                 quizzes: content.filter((c: any) => c.type === 'quiz').length,
                 lessons: content.filter((c: any) => c.type === 'lesson').length
             });
+
+            if (currentUser.ipAddress) {
+                setIpAddress(currentUser.ipAddress);
+            }
         };
 
         loadData();
@@ -104,6 +112,23 @@ export default function TeacherDashboard() {
     const handleExit = async () => {
         await logout();
         navigate('/');
+    };
+
+    const handleSaveIp = async () => {
+        if (!db || !currentUser) return;
+        setSavingIp(true);
+        try {
+            const userDoc = await db.users.findOne(currentUser.id).exec();
+            if (userDoc) {
+                await userDoc.patch({ ipAddress: ipAddress });
+                alert("IP Address Updated!");
+            }
+        } catch (err) {
+            console.error("Failed to save IP:", err);
+            alert("Failed to save IP");
+        } finally {
+            setSavingIp(false);
+        }
     };
 
     return (
@@ -232,6 +257,35 @@ export default function TeacherDashboard() {
                 </button>
             </div>
 
+            {/* IP Address Settings */}
+            <div className="mb-8 glass-panel p-6 rounded-2xl border border-white/5">
+                <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-green-500"></span> Device Configuration
+                </h3>
+                <div className="flex items-end gap-4 max-w-md">
+                    <div className="flex-1 space-y-2">
+                        <label className="text-xs uppercase font-bold text-slate-500">Device IP Address</label>
+                        <input
+                            type="text"
+                            value={ipAddress}
+                            onChange={(e) => setIpAddress(e.target.value)}
+                            placeholder="192.168.x.x"
+                            className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white font-mono focus:border-primary focus:outline-none"
+                        />
+                    </div>
+                    <button
+                        onClick={handleSaveIp}
+                        disabled={savingIp}
+                        className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold transition-all disabled:opacity-50"
+                    >
+                        {savingIp ? 'Saving...' : 'Update IP'}
+                    </button>
+                </div>
+                <p className="text-xs text-slate-500 mt-2">
+                    This IP is used to identify this teacher device for local syncing.
+                </p>
+            </div>
+
             <section className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {classes.map((cls) => (
@@ -267,6 +321,8 @@ export default function TeacherDashboard() {
                     )}
                 </div>
             </section>
+
+
         </div>
     );
 }

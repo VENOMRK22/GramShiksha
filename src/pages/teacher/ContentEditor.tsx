@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDatabase } from '../../context/DatabaseContext';
 import { useAuth } from '../../context/AuthContext';
@@ -38,6 +38,7 @@ export default function ContentEditor() {
     const contextType = paramType === 'lesson' ? 'text' : paramType; // Normalize lesson->text
     const contextSubjectId = searchParams.get('subjectId');
     const contextModuleId = searchParams.get('moduleId');
+    const editId = searchParams.get('editId'); // Check for edit mode
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -48,6 +49,37 @@ export default function ContentEditor() {
     const [translations, setTranslations] = useState<Record<string, string>>({
         en: '', hi: '', mr: ''
     });
+
+    // Load Data for Editing
+    useEffect(() => {
+        if (!db || !editId) return;
+
+        const loadContent = async () => {
+            const doc = await db.content.findOne(editId).exec();
+            if (doc) {
+                setTitle(doc.get('title'));
+                setDescription(doc.get('description') || '');
+                setIsHomework(doc.get('isHomework') || false);
+
+                const data = doc.get('data') || {};
+
+                // Load Translations
+                if (data.translations) {
+                    setTranslations(data.translations);
+                } else if (data.content) {
+                    // Legacy support
+                    setTranslations(prev => ({ ...prev, en: data.content }));
+                }
+
+                // Load Questions (for Quiz)
+                if (data.questions) setQuestions(data.questions);
+
+                // Load Attachments
+                if (data.attachments) setAttachments(data.attachments);
+            }
+        };
+        loadContent();
+    }, [db, editId]);
 
     // Quiz State
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -116,13 +148,43 @@ export default function ContentEditor() {
         if (!db || !currentUser) return;
 
         try {
-            const contentId = uuidv4();
-            await db.content.insert({
+            const contentId = editId || uuidv4(); // Use existing ID if editing
+
+            // AUTOMATIC CLASS ID INHERITANCE
+            let finalClassId = currentUser.classId || 'default';
+
+            try {
+                // If we have a Subject, get Class ID from it
+                if (contextSubjectId && contextSubjectId !== 'undefined') {
+                    const sub = await db.content.findOne(contextSubjectId).exec();
+                    if (sub && sub.get('classId')) {
+                        finalClassId = sub.get('classId');
+                    }
+                }
+                // If we have a Module (but no Subject ID yet), find the Module -> Subject chain
+                else if (contextModuleId && contextModuleId !== 'undefined') {
+                    const mod = await db.content.findOne(contextModuleId).exec();
+                    if (mod) {
+                        const parentSubId = mod.get('subjectId');
+                        if (parentSubId) {
+                            const sub = await db.content.findOne(parentSubId).exec();
+                            if (sub && sub.get('classId')) {
+                                finalClassId = sub.get('classId');
+                            }
+                        }
+                    }
+                }
+            } catch (lookupError) {
+                console.warn("ClassID Lookup failed, defaulting to user class:", lookupError);
+                // Non-fatal, continue with default
+            }
+
+            const docData = {
                 id: contentId,
                 type: contextType, // 'text' | 'quiz' | 'module'
                 title,
                 description,
-                classId: currentUser.classId || 'default',
+                classId: finalClassId, // Use inherited Class ID
                 subjectId: contextSubjectId || undefined,
                 moduleId: contextModuleId || undefined,
                 teacherId: currentUser.id,
@@ -133,9 +195,25 @@ export default function ContentEditor() {
                     attachments,
                     questions: contextType === 'quiz' ? questions : undefined
                 },
-                createdAt: Date.now(),
                 updatedAt: Date.now()
-            });
+            };
+
+            // SANITIZE: Deep clone to remove any RxDB Proxies or non-serializable data
+            const cleanDocData = JSON.parse(JSON.stringify(docData));
+
+            if (editId) {
+                // Update Existing
+                const existingDoc = await db.content.findOne(editId).exec();
+                if (existingDoc) {
+                    await existingDoc.patch(cleanDocData);
+                }
+            } else {
+                // Insert New
+                await db.content.insert({
+                    ...cleanDocData,
+                    createdAt: Date.now()
+                });
+            }
 
             // Redirect back
             if (contextModuleId) {
@@ -146,9 +224,9 @@ export default function ContentEditor() {
                 navigate('/teacher');
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Save failed", error);
-            alert("Failed to save content");
+            alert("Failed to save: " + (error?.message || "Unknown error"));
         }
     };
 
@@ -171,7 +249,7 @@ export default function ContentEditor() {
                         <ArrowLeft className="w-6 h-6" />
                     </button>
                     <h1 className="text-xl font-bold capitalize">
-                        Create {contextType === 'module' ? 'Module' : contextType === 'quiz' ? 'Quiz' : 'Note'}
+                        {editId ? 'Edit' : 'Create'} {contextType === 'module' ? 'Module' : contextType === 'quiz' ? 'Quiz' : 'Note'}
                     </h1>
                 </div>
                 <button

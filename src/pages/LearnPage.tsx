@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDatabase } from '../context/DatabaseContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Play, Lock, Star, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Play, CheckCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 
@@ -16,7 +16,6 @@ import bgGeography from '../assets/subjects/geography.png';
 import bgDefense from '../assets/subjects/defense.png';
 // Fallbacks
 import bgLanguage from '../assets/subjects/language.png';
-import bgSocial from '../assets/subjects/social.png';
 
 // Helper for subject backgrounds
 const getSubjectBg = (title: string) => {
@@ -106,6 +105,7 @@ export default function LearnPage() {
                     selector: { subjectId: subjectId },
                     sort: [{ createdAt: 'asc' }]
                 }).exec();
+
                 setLessons(lessonDocs.map((d: any) => d.toJSON()));
 
                 // Progress
@@ -128,7 +128,8 @@ export default function LearnPage() {
     // --- VIEW 1: SUBJECT GRID (Class) ---
     if (!subjectId) {
         return (
-            <div className="min-h-screen p-6 pb-24 font-sans aurora-bg animate-fade-in">
+            <div className="min-h-screen p-6 pb-24 font-sans relative animate-fade-in">
+                <div className="cosmic-bg" />
                 <div className="flex items-center gap-4 mb-8">
                     <button
                         onClick={() => navigate('/dashboard')}
@@ -185,7 +186,8 @@ export default function LearnPage() {
     );
 
     return (
-        <div className="min-h-screen p-6 pb-24 font-sans aurora-bg">
+        <div className="min-h-screen p-6 pb-24 font-sans relative">
+            <div className="cosmic-bg" />
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
                 <button

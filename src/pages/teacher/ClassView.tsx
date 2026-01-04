@@ -127,12 +127,20 @@ export default function ClassView() {
 
         try {
             console.log("Attempting to create subject:", { title, classId });
+
+            // Fetch class details to get Medium/Standard
+            const cls = await db.classes.findOne(classId).exec();
+            const medium = cls?.get('medium') || 'english';
+            const standard = cls?.get('standard') || '10';
+
             await db.content.insert({
                 id: crypto.randomUUID(),
                 type: 'subject',
                 title,
                 description: `Subject in ${className}`,
                 classId: classId,
+                medium: medium, // Critical for visibility
+                standard: standard, // Good metadata
                 data: {},
                 createdAt: Date.now(),
                 updatedAt: Date.now(),

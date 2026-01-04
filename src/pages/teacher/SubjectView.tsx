@@ -57,6 +57,7 @@ export default function SubjectView() {
             title,
             description: `Module in ${subjectTitle}`,
             subjectId: subjectId,
+            classId: classId, // Inherit Class ID from Subject
             data: {},
             createdAt: Date.now(),
             updatedAt: Date.now(),

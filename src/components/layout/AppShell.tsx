@@ -26,7 +26,7 @@ export default function AppShell() {
                 {/* Header Removed as per user request */}
 
                 {/* Main Content Area */}
-                <main className="flex-1 overflow-y-auto scrollbar-hide">
+                <main className="flex-1 overflow-y-auto no-scrollbar">
                     <Outlet />
                 </main>
 

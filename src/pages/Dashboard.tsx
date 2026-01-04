@@ -75,8 +75,8 @@ export default function Dashboard() {
     if (loading) return <div className="min-h-screen grid place-items-center text-cyan-400 animate-pulse">Initializing Interface...</div>;
 
     return (
-        <div className="min-h-screen p-4 pb-24 font-sans relative overflow-x-hidden animate-fade-in">
-            <div className="aurora-bg" />
+        <div className="min-h-screen p-4 pb-24 font-sans relative animate-fade-in">
+            <div className="cosmic-bg" />
             {/* Header */}
             <header className="flex justify-between items-center mb-8 pt-2">
                 <div>
@@ -135,7 +135,7 @@ export default function Dashboard() {
                         </motion.div>
                     )}
 
-                    {/* Slide 1: RANK (Elite Shield) */}
+                    {/* Slide 1: RANK (Elite Shield - Now Circular) */}
                     {currentSlide === 1 && (
                         <motion.div
                             key="rank"
@@ -147,23 +147,22 @@ export default function Dashboard() {
                         >
                             <div className="relative z-10 flex flex-col items-center justify-center">
                                 <div className="relative w-40 h-40 flex items-center justify-center mb-2">
-                                    {/* Hexagon Outer */}
+                                    {/* Outer Rotating Ring */}
                                     <motion.div
                                         animate={{ rotate: 360 }}
                                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                                        className="absolute inset-0 border border-yellow-500/30"
-                                        style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
+                                        className="absolute inset-0 rounded-full border border-yellow-500/30 border-dashed"
                                     />
-                                    {/* Hexagon Pulse */}
-                                    <div
-                                        className="absolute inset-0 bg-yellow-500/10 animate-ping-slow"
-                                        style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
+                                    {/* Inner Counter-Rotating Segments */}
+                                    <motion.div
+                                        animate={{ rotate: -360 }}
+                                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                        className="absolute inset-2 rounded-full border-2 border-transparent border-t-yellow-500/80 border-b-yellow-500/20"
                                     />
 
                                     {/* Central Badge */}
-                                    <div className="absolute w-24 h-24 bg-black/80 backdrop-blur-md border border-yellow-500/50 flex flex-col items-center justify-center shadow-[0_0_50px_rgba(234,179,8,0.5)]"
-                                        style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-                                        <Trophy className="w-8 h-8 text-yellow-400 mb-1" />
+                                    <div className="absolute inset-6 rounded-full bg-black/80 backdrop-blur-md border border-yellow-500/50 flex flex-col items-center justify-center shadow-[0_0_50px_rgba(234,179,8,0.5)]">
+                                        <Trophy className="w-8 h-8 text-yellow-400 mb-1 drop-shadow-md" />
                                         <span className="text-3xl font-black text-white leading-none tracking-tighter">
                                             #{stats.rank > 0 ? stats.rank : '-'}
                                         </span>
@@ -219,7 +218,6 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 relative z-10 max-w-4xl mx-auto perspective-1000">
                 {navItems.map((item, i) => {
                     const isHovered = hoveredIdx === i;
-                    const isBlurred = hoveredIdx !== null && hoveredIdx !== i;
 
                     return (
                         <motion.button
@@ -228,8 +226,7 @@ export default function Dashboard() {
                             animate={{
                                 opacity: 1,
                                 y: 0,
-                                scale: isHovered ? 1.02 : isBlurred ? 0.98 : 1,
-                                filter: isBlurred ? "blur(0.8px) grayscale(0.15)" : "blur(0px) grayscale(0)",
+                                scale: isHovered ? 1.02 : 1,
                             }}
                             transition={{ delay: i * 0.1, duration: 0.3 }}
                             onMouseEnter={() => setHoveredIdx(i)}
@@ -240,7 +237,6 @@ export default function Dashboard() {
                                     ? `border-white/40 shadow-2xl ${item.shadow} z-20`
                                     : 'border-white/5 shadow-lg z-10'
                                 }
-                                ${isBlurred ? 'opacity-90' : 'opacity-100'}
                             `}
                         >
                             <div className={`absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity`}>
