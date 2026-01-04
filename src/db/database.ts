@@ -52,6 +52,7 @@ export const createDB = async (): Promise<EduDatabase> => {
         const db = await createRxDatabase<EduDatabaseCollections>({
             name: 'gramshiksha_db_v1',
             storage: dbStorage,
+            multiInstance: true,
             ignoreDuplicate: true
         });
 
